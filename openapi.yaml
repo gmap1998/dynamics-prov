@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+title: Dynamics Prototype API
+version: "1.0"
+description: Matrix engine API with strategy and market data.
+servers:
+
+* url: [http://localhost:8000](http://localhost:8000)
+
+paths:
+/dashboard:
+get:
+summary: Run a full cycle and return latest matrix
+responses:
+'200':
+description: Success
+
+/wallet:
+get:
+summary: Get wallet equivalent in USDT
+responses:
+'200':
+description: Wallet snapshot
+
+/market:
+get:
+summary: Return market matrices
+responses:
+'200':
+description: Benchmark, delta, delta\_pct, quantid
+
+/assets:
+get:
+summary: List assets in the latest cycle
+responses:
+'200':
+description: Asset list
+
+/matrix/{matrix\_type}:
+get:
+summary: Fetch a specific matrix
+parameters:
+\- name: matrix\_type
+in: path
+required: true
+schema:
+type: string
+description: benchmark, delta, delta\_pct, quantid, id\_pct
+responses:
+'200':
+description: Matrix data
+
+/strategy/config:
+get:
+summary: Fetch current strategy config
+responses:
+'200':
+description: Tier, mode, imprint, luggage
+
+```
+post:
+  summary: Update strategy config
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            tier:
+              type: string
+            mode:
+              type: string
+            expectedImprint:
+              type: number
+            expectedLuggage:
+              type: number
+  responses:
+    '200':
+      description: Saved
+```
+
+/strategy/aux:
+get:
+summary: Fetch strategy auxiliary table
+responses:
+'200':
+description: Strategy aux info
+
+/status:
+get:
+summary: Get DB status and latest timestamp
+responses:
+'200':
+description: DB status
+
+components: {}
